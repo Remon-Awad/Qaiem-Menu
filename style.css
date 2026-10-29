@@ -1,0 +1,741 @@
+/* =====================================================
+   بن قيّم — Design System
+   ألوان البراند مأخوذة من المنيو الأصلي:
+   تيل اللوجو والأسعار • بيج/تان خلفية البن • بني التحميص
+   1. Tokens   2. Base   3. Header   4. Buttons
+   5. Hero     6. Perks  7. Sections 8. Menu
+   9. Cart     10. Footer 11. Motion 12. Hover (desktop)
+   13. Responsive
+   ===================================================== */
+
+/* ============ 1. TOKENS ============ */
+:root {
+  /* التيل: لون اللوجو وأزرار الأسعار */
+  --brand-teal: #1a93a4;      /* لون اللوجو (أفتح شوية عشان يبان على الخلفية الغامقة) */
+  --teal: #17899a;
+  --teal-dark: #0d6573;
+  --teal-deep: #08454f;
+  --teal-soft: #d9eff2;
+
+  /* البن: درجات التحميص */
+  --espresso: #1b100a;
+  --roast: #2b1a10;
+  --bean: #3b2213;
+  --roast-light: #d2a35c;
+  --roast-mid: #9a5b2e;
+  --roast-dark: #3b2113;
+
+  /* خلفية البن المطحون (بيج/تان) */
+  --tan: #c9a56a;
+  --gold: #c9a35f;
+  --gold-soft: #ecdcb2;
+  --gold-deep: #a47f3c;
+  --sand: #efe3cb;
+  --paper: #fbf6ec;
+  --cream: #f7efe0;
+
+  --ink: #2b1d14;
+  --muted: #7b6a5b;
+
+  --radius: 20px;
+  --radius-sm: 12px;
+  --shadow: 0 10px 30px rgba(43, 26, 16, .12);
+  --shadow-lg: 0 24px 60px rgba(27, 16, 10, .3);
+  --glow-teal: 0 12px 30px rgba(23, 137, 154, .28);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --header-h: 72px;
+
+  --font-display: 'Reem Kufi', 'Cairo', sans-serif;
+  --font-script: 'Aref Ruqaa', 'Reem Kufi', serif;
+  --font-body: 'Cairo', system-ui, sans-serif;
+}
+
+/* ============ 2. BASE ============ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 8px); -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; touch-action: manipulation; }
+ul { list-style: none; }
+::selection { background: var(--teal); color: #fff; }
+.container { width: min(1160px, 92%); margin-inline: auto; }
+.center { text-align: center; margin-top: 36px; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+
+.skip-link {
+  position: absolute; top: -100px; inset-inline-start: 12px; z-index: 200;
+  background: var(--gold); color: var(--espresso); padding: 8px 18px;
+  border-radius: 0 0 12px 12px; font-weight: 700; transition: top .2s;
+}
+.skip-link:focus { top: 0; }
+
+/* ============ 3. HEADER ============ */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  height: var(--header-h);
+  background: rgba(27, 16, 10, .94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(201, 163, 95, .2);
+  transition: box-shadow .3s;
+}
+.site-header.scrolled { box-shadow: 0 8px 24px rgba(0, 0, 0, .4); }
+.nav { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+
+/* شريط تقدم السكرول */
+.scroll-progress {
+  position: absolute; inset-inline: 0; bottom: -1px; height: 3px; pointer-events: none;
+  background: linear-gradient(90deg, var(--teal), var(--gold));
+  transform: scaleX(0); transform-origin: right;
+}
+
+/* اللوجو: حروف تيل بحدود بيضاء زي لوجو المنيو */
+.brand {
+  display: flex; align-items: center; height: 100%; padding-inline: 4px;
+  transition: transform .3s var(--ease), filter .3s;
+}
+.brand-word {
+  display: flex; align-items: baseline; gap: .1em;
+  font-family: var(--font-script); font-weight: 700; font-size: 1.6rem; line-height: 1;
+  color: var(--brand-teal);
+  -webkit-text-stroke: .22em #fff; paint-order: stroke fill;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, .25);
+  padding-top: .55em; padding-bottom: .1em;
+}
+.bw-bin { font-size: .62em; }
+
+/* القائمة: كبسولة، واللينك النشط متعبّي دهبي */
+.nav-links {
+  display: flex; gap: 2px; padding: 4px; border-radius: 999px;
+  background: rgba(255, 255, 255, .05); border: 1px solid rgba(201, 163, 95, .16);
+}
+.nav-links a {
+  position: relative; padding: 7px 16px; color: var(--gold-soft);
+  font-weight: 600; font-size: .95rem; border-radius: 999px;
+  transition: color .25s, background .25s;
+}
+.nav-links a.active { color: var(--espresso); background: var(--gold); }
+
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.cart-btn {
+  position: relative; width: 44px; height: 44px; border-radius: 50%;
+  display: grid; place-items: center; color: var(--gold);
+  border: 1px solid rgba(201, 163, 95, .45);
+  transition: background .25s, color .25s, transform .25s var(--ease), box-shadow .25s;
+}
+.cart-count {
+  position: absolute; top: -4px; inset-inline-start: -4px;
+  min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px;
+  background: var(--teal); color: #fff; font-size: .72rem; font-weight: 700;
+  display: grid; place-items: center; line-height: 1;
+  box-shadow: 0 0 0 2px var(--espresso);
+}
+.cart-count[data-zero="true"] { display: none; }
+.cart-btn.bump { animation: pop .4s; }
+
+.burger { display: none; width: 44px; height: 44px; flex-direction: column; justify-content: center; align-items: center; gap: 5px; border-radius: 50%; transition: background .2s; }
+.burger span { width: 22px; height: 2px; background: var(--gold); border-radius: 2px; transition: transform .3s, opacity .3s; }
+.site-header.open .burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.site-header.open .burger span:nth-child(2) { opacity: 0; }
+.site-header.open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ============ 4. BUTTONS ============ */
+.btn {
+  position: relative; overflow: hidden;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 46px; padding: 11px 28px; border-radius: 999px; font-weight: 700;
+  transition: transform .25s var(--ease), box-shadow .25s, background .25s, color .25s, border-color .25s;
+}
+/* لمعة بتعدّي على الزر */
+.btn::before {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 40%; inset-inline-start: -60%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .45), transparent);
+  transform: skewX(-20deg); transition: inset-inline-start .6s var(--ease);
+}
+.btn-primary { background: var(--gold); color: var(--espresso); box-shadow: 0 8px 20px rgba(201, 163, 95, .35); }
+.btn-ghost { border: 1.5px solid var(--gold); color: var(--gold-soft); }
+.btn-link { color: var(--muted); font-size: .9rem; text-decoration: underline; text-underline-offset: 4px; padding: 6px; transition: color .2s; }
+.btn:active { transform: scale(.97); }
+
+/* ============ 5. HERO ============ */
+.hero {
+  position: relative; overflow: hidden; color: var(--cream);
+  min-height: calc(100vh - var(--header-h)); min-height: calc(100svh - var(--header-h));
+  display: flex; align-items: center;
+  background:
+    radial-gradient(900px 500px at 15% 20%, rgba(23, 137, 154, .28), transparent 60%),
+    radial-gradient(700px 500px at 85% 80%, rgba(201, 165, 106, .2), transparent 60%),
+    linear-gradient(160deg, var(--roast), var(--espresso));
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0; opacity: .5; pointer-events: none;
+  background-image:
+    radial-gradient(ellipse 10px 6px at 20px 20px, rgba(201, 163, 95, .12) 98%, transparent),
+    radial-gradient(ellipse 10px 6px at 60px 55px, rgba(201, 163, 95, .08) 98%, transparent);
+  background-size: 80px 80px;
+}
+.hero-grid { position: relative; display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 40px; padding-block: 60px 96px; }
+
+/* حبوب بن عايمة في الخلفية */
+.hero-bg { position: absolute; inset: 0; pointer-events: none; }
+.bean {
+  position: absolute; width: 26px; height: 17px; border-radius: 50%;
+  background: #4a2c18; box-shadow: inset -3px -3px 0 rgba(0, 0, 0, .28);
+  opacity: .75; --r: 0deg;
+  animation: drift 9s ease-in-out infinite;
+}
+.bean::after {
+  content: ''; position: absolute; inset: 50% 10% auto; height: 2px; border-radius: 2px;
+  background: rgba(0, 0, 0, .5); transform: rotate(-18deg);
+}
+.b1 { top: 14%; inset-inline-start: 6%;  --r: 20deg;  }
+.b2 { top: 72%; inset-inline-start: 9%;  --r: -30deg; animation-delay: -2s; width: 20px; height: 13px; }
+.b3 { top: 30%; inset-inline-end: 5%;    --r: 50deg;  animation-delay: -4s; }
+.b4 { top: 84%; inset-inline-end: 15%;   --r: -10deg; animation-delay: -6s; width: 22px; height: 14px; }
+.b5 { top: 8%;  inset-inline-start: 44%; --r: 70deg;  animation-delay: -3s; width: 18px; height: 12px; }
+.b6 { top: 64%; inset-inline-start: 47%; --r: -55deg; animation-delay: -5s; }
+
+/* العنوان: نفس لوجو المنيو (تيل + حدود بيضاء) */
+.hero-title {
+  display: flex; align-items: baseline; gap: .12em;
+  font-family: var(--font-script); font-weight: 700; line-height: 1;
+  font-size: clamp(3.4rem, 9vw, 6.4rem);
+  color: var(--brand-teal);
+  -webkit-text-stroke: .2em #fff; paint-order: stroke fill;
+  text-shadow: 0 .05em 0 rgba(0, 0, 0, .2), 0 0 .55em rgba(26, 147, 164, .4);
+}
+.ht-bin { font-size: .6em; }
+/* مساحة لشدة الـق وذيل الـم عشان ما يدخلوش في اللي فوق وتحت */
+.ht-qaiem { padding-top: .9em; padding-bottom: .42em; }
+
+.hero-tag {
+  display: flex; align-items: center; gap: 14px; width: max-content; max-width: 100%;
+  color: var(--gold); font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 14px;
+}
+.hero-tag span { flex: 0 0 54px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold)); }
+.hero-tag span:last-child { transform: scaleX(-1); }
+
+.hero-lead { max-width: 30em; font-size: 1.1rem; color: rgba(247, 239, 224, .85); text-wrap: pretty; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+
+.hero-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.hero-chips li {
+  display: inline-flex; align-items: center; gap: 8px; padding: 4px 14px; border-radius: 999px;
+  border: 1px solid rgba(201, 163, 95, .28); background: rgba(255, 255, 255, .04);
+  font-size: .88rem; color: var(--gold-soft);
+  transition: background .25s, border-color .25s, transform .25s var(--ease);
+}
+.hero-chips li::before {
+  content: ''; width: 8px; height: 8px; border-radius: 50%; flex: none;
+  background: var(--brand-teal); box-shadow: 0 0 0 3px rgba(26, 147, 164, .28);
+}
+
+/* ظهور متتابع لعناصر الهيرو */
+.hero-text > * { animation: rise .8s var(--ease) backwards; }
+.hero-text > :nth-child(2) { animation-delay: .1s; }
+.hero-text > :nth-child(3) { animation-delay: .2s; }
+.hero-text > :nth-child(4) { animation-delay: .3s; }
+.hero-text > :nth-child(5) { animation-delay: .4s; }
+
+.hero-art { position: relative; display: grid; place-items: center; }
+.hero-rings {
+  position: absolute; width: min(540px, 118%); aspect-ratio: 1; border-radius: 50%;
+  border: 1.5px dashed rgba(201, 163, 95, .28); animation: spin 70s linear infinite;
+}
+.hero-rings::before, .hero-rings::after { content: ''; position: absolute; border-radius: 50%; }
+.hero-rings::before { inset: 11%; border: 1px solid rgba(26, 147, 164, .35); }
+.hero-rings::after  { inset: 24%; border: 1px dashed rgba(201, 163, 95, .18); }
+.hero-glow {
+  position: absolute; width: 80%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle, rgba(201, 163, 95, .3), transparent 65%);
+  filter: blur(20px); animation: breathe 6s ease-in-out infinite;
+}
+.cup-svg { position: relative; width: min(440px, 100%); filter: drop-shadow(0 30px 30px rgba(0, 0, 0, .45)); animation: float 6s ease-in-out infinite; transition: filter .4s; }
+.steam path {
+  fill: none; stroke: var(--gold-soft); stroke-width: 6; stroke-linecap: round;
+  opacity: 0; animation: steam 4s ease-in-out infinite;
+}
+.steam path:nth-child(2) { animation-delay: 1.3s; }
+.steam path:nth-child(3) { animation-delay: 2.6s; }
+
+/* ستيكر السعر */
+.price-tag {
+  position: absolute; top: 12%; inset-inline-end: 4%; display: grid; text-align: center;
+  padding: 6px 20px 8px; border-radius: 18px; background: var(--brand-teal); color: #fff;
+  border: 3px solid #fff; box-shadow: 0 14px 30px rgba(0, 0, 0, .4);
+  transform: rotate(-6deg); animation: tagFloat 5s ease-in-out infinite;
+}
+.price-tag small { font-size: .78rem; opacity: .92; line-height: 1.6; }
+.price-tag strong { font-family: var(--font-display); font-size: 1.7rem; line-height: 1.3; }
+
+/* مؤشر السكرول */
+.scroll-cue {
+  position: absolute; bottom: 18px; inset-inline: 0; margin-inline: auto; width: max-content;
+  display: grid; justify-items: center; gap: 6px; color: var(--gold-soft); font-size: .8rem; opacity: .8;
+  transition: opacity .25s, transform .25s var(--ease);
+}
+.scroll-cue i { position: relative; width: 22px; height: 34px; border: 2px solid currentColor; border-radius: 12px; }
+.scroll-cue i::after {
+  content: ''; position: absolute; top: 6px; left: 50%; width: 4px; height: 7px; margin-left: -2px;
+  border-radius: 2px; background: currentColor; animation: wheel 1.8s ease-in-out infinite;
+}
+
+/* ============ 6. PERKS (كارت ثابت: شاي كرك / تمور / مكسرات) ============ */
+.perks { background: var(--paper); padding: 34px 0 0; }
+.perks-list {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+  border: 1px solid rgba(23, 137, 154, .18); border-top: 4px solid var(--teal);
+  overflow: hidden;
+}
+.perk {
+  display: flex; align-items: center; justify-content: center; gap: 14px; padding: 20px 14px;
+  transition: background .3s;
+}
+.perk + .perk { border-inline-start: 1px dashed rgba(59, 34, 19, .18); }
+.perk-icon {
+  flex: none; width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center;
+  background: var(--teal-soft); color: var(--teal-dark);
+  transition: transform .4s var(--ease), background .3s, color .3s;
+}
+.perk-text { display: grid; line-height: 1.35; }
+.perk-text small { color: var(--teal); font-weight: 700; font-size: .8rem; }
+.perk-text strong { font-family: var(--font-display); font-size: 1.2rem; color: var(--bean); }
+.perks + .section { padding-top: 64px; }
+
+/* ============ 7. SECTIONS ============ */
+.section { padding-block: 90px; }
+.section-dark { background: linear-gradient(180deg, var(--roast), var(--espresso)); color: var(--cream); }
+.section-sand { background: linear-gradient(180deg, var(--sand), #e8d8b6); }
+.section-head { text-align: center; margin-bottom: 48px; }
+.kicker { color: var(--teal); font-weight: 700; letter-spacing: .5px; }
+.section-head h2 { font-family: var(--font-display); font-size: clamp(1.6rem, 4vw, 2.6rem); line-height: 1.4; color: var(--bean); }
+.section-head--light h2 { color: #fff; }
+.section-head--light .kicker { color: var(--gold); }
+.ornament { display: block; width: 90px; height: 14px; margin: 12px auto 0; position: relative; }
+.ornament::before { content: ''; position: absolute; inset-inline: 0; top: 6px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.ornament::after { content: '✦'; position: absolute; inset: -6px 0 auto; text-align: center; color: var(--gold); font-size: 14px; background: var(--paper); width: 24px; margin-inline: auto; }
+.section-dark .ornament::after { background: var(--roast); }
+.section-sand .ornament::after { background: var(--sand); }
+
+/* عناصر بتتحرك مع الهوفر + ظهور تدريجي: transition موحّد */
+.stat, .feature, .blend, .contact-card, .weight, .pick, .guide {
+  transition: transform .35s var(--ease), box-shadow .35s, border-color .3s, background .3s, opacity .7s ease;
+}
+
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; }
+.stat { background: #fff; border-radius: var(--radius); padding: 22px 12px; text-align: center; box-shadow: var(--shadow); border-bottom: 4px solid var(--teal); }
+.stat strong { display: block; font-family: var(--font-display); font-size: clamp(1.8rem, 5vw, 3rem); color: var(--teal-dark); line-height: 1.2; }
+.stat span { color: var(--muted); font-weight: 600; }
+
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 22px; }
+.feature { background: #fff; border-radius: var(--radius); padding: 30px 26px; box-shadow: var(--shadow); border: 1px solid transparent; }
+.feature-icon { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: var(--teal-soft); font-size: 1.6rem; margin-bottom: 14px; transition: transform .4s var(--ease), background .3s; }
+.feature h3 { font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 6px; color: var(--bean); }
+.feature p { color: var(--muted); }
+
+/* التوليفات المميزة */
+.blend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 22px; }
+.blend {
+  position: relative; overflow: hidden; border-radius: var(--radius); padding: 28px 24px;
+  background: linear-gradient(160deg, var(--bean), var(--roast));
+  border: 1px solid rgba(201, 163, 95, .25);
+}
+/* سبب مشكلة اللينك: أيقونة الكوباية (::after) كانت واقفة فوق اللينك وبتاخد الضغطة.
+   pointer-events:none بيخليها زينة بس، والمحتوى فوقها بـ z-index */
+.blend::after { content: '☕'; position: absolute; inset-inline-start: -10px; bottom: -22px; font-size: 6rem; opacity: .07; transition: transform .5s var(--ease), opacity .3s; pointer-events: none; z-index: 0; }
+.blend > * { position: relative; z-index: 1; }
+.blend h3 { font-family: var(--font-script); font-size: 2rem; color: var(--gold); line-height: 1.9; margin-block: -.2em -.1em; }
+.blend .badge { margin-block: 6px 14px; }
+.blend-price { color: var(--cream); }
+.blend-price strong { font-family: var(--font-display); font-size: 1.6rem; color: #fff; }
+.blend a { display: inline-block; margin-top: 14px; padding-block: 4px; color: var(--gold-soft); font-weight: 700; border-bottom: 1px solid currentColor; transition: color .2s, padding .25s var(--ease); }
+
+.badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, .18); color: inherit; padding: 0 12px; border-radius: 999px; font-size: .8rem; font-weight: 600; line-height: 1.9; }
+.blend .badge { background: rgba(23, 137, 154, .4); color: #fff; }
+
+/* دليل المزاج */
+.guide { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 30px; }
+.moods { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.mood { min-height: 44px; padding: 8px 24px; border-radius: 999px; border: 2px solid var(--teal); color: var(--teal-dark); font-weight: 700; transition: background .25s, color .25s, transform .25s var(--ease), box-shadow .25s; }
+.mood[aria-selected="true"] { background: var(--teal); color: #fff; box-shadow: var(--glow-teal); }
+.mood-result { margin-top: 26px; }
+.mood-desc { text-align: center; color: var(--muted); max-width: 600px; margin: 0 auto 22px; }
+.mood-picks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 16px; }
+.pick { background: var(--paper); border-radius: var(--radius-sm); padding: 16px; border: 1px solid var(--sand); }
+.pick h4 { font-family: var(--font-display); font-size: 1.15rem; color: var(--bean); }
+.pick small { color: var(--muted); display: block; }
+.pick p { margin-top: 6px; font-weight: 700; color: var(--teal-dark); }
+.pick a { display: inline-block; font-size: .9rem; color: var(--gold-deep); font-weight: 700; padding-block: 4px; transition: transform .25s var(--ease), color .2s; }
+
+.weights { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 28px; }
+.weight { text-align: center; padding: 16px 8px; border-radius: var(--radius-sm); background: var(--teal); color: #fff; }
+.weight strong { display: block; font-family: var(--font-display); font-size: 1.3rem; }
+.weight span { opacity: .85; font-size: .9rem; }
+
+/* التواصل */
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 22px; max-width: 760px; margin-inline: auto; }
+.contact-card { display: flex; align-items: center; gap: 18px; background: #fff; padding: 24px; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid transparent; }
+.contact-icon { width: 60px; height: 60px; flex: none; border-radius: 18px; display: grid; place-items: center; color: #fff; transition: transform .4s var(--ease); }
+.contact-icon.wa { background: #25a244; }
+.contact-icon.ph { background: var(--teal); }
+.contact-card h3 { font-family: var(--font-display); color: var(--bean); }
+.contact-card p { font-size: 1.2rem; font-weight: 700; color: var(--teal-dark); text-align: right; }
+
+/* ============ 8. MENU ============ */
+.menu-section { padding-bottom: 70px; }
+
+.toolbar {
+  position: sticky; top: var(--header-h); z-index: 40;
+  background: rgba(251, 246, 236, .96); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--sand); margin-bottom: 20px;
+}
+.toolbar-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-block: 12px; }
+.tabs { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; max-width: 100%; -webkit-overflow-scrolling: touch; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex: none; min-height: 40px; padding: 6px 20px; border-radius: 999px; font-weight: 700; white-space: nowrap;
+  background: #fff; border: 1.5px solid var(--sand);
+  transition: background .25s, color .25s, border-color .25s, transform .25s var(--ease), box-shadow .25s;
+}
+.tab.active { background: var(--teal); color: #fff; border-color: var(--teal); box-shadow: var(--glow-teal); }
+.tabs.searching .tab { opacity: .45; pointer-events: none; }
+/* فلتر سادة / محوج: أخف بصريًا من تابات الأقسام */
+.tabs.variants .tab { min-height: 34px; padding: 2px 16px; font-size: .9rem; border-style: dashed; }
+.tabs.variants .tab.active { border-style: solid; background: var(--bean); border-color: var(--bean); box-shadow: none; }
+
+.search {
+  display: flex; align-items: center; gap: 8px; background: #fff; border: 1.5px solid var(--sand);
+  border-radius: 999px; padding: 4px 16px; flex: 1 1 260px; max-width: 360px; color: var(--muted);
+  transition: border-color .2s, box-shadow .2s;
+}
+.search:focus-within { border-color: var(--teal); box-shadow: 0 0 0 4px rgba(23, 137, 154, .15); color: var(--teal); }
+.search input { flex: 1; border: 0; outline: 0; background: transparent; font: inherit; color: var(--ink); padding: 6px 0; min-width: 0; }
+.search input::-webkit-search-cancel-button { display: none; }
+.search button { width: 26px; height: 26px; border-radius: 50%; font-size: .8rem; color: var(--muted); transition: background .2s, color .2s; }
+
+.menu-hint { text-align: center; color: var(--muted); font-size: .92rem; margin-bottom: 26px; }
+.results-title { font-family: var(--font-display); font-size: 1.5rem; margin: 30px 0 14px; color: var(--teal-dark); }
+.no-results { text-align: center; padding: 50px 0; color: var(--muted); font-size: 1.1rem; }
+
+.menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 22px; }
+.card {
+  background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden;
+  border: 1px solid rgba(23, 137, 154, .15);
+  animation: rise .5s ease backwards;
+  transition: transform .35s var(--ease), box-shadow .35s, border-color .3s;
+}
+/* هدف اللينكات (كارت الصنف): مسافة تعوّض الهيدر وشريط الأدوات الثابتين */
+.card.family { scroll-margin-top: calc(var(--header-h) + 120px); }
+/* وميض خفيف على الكارت اللي وصلنا له */
+/* التأثير على طبقة منفصلة (::after) — مش بنلمس animation الكارت نفسه،
+   عشان كده مفيش "قفزة" (كانت بتحصل لأن animation: rise كان بيتعاد). */
+.card.family { position: relative; }
+/* تأثير "لمعة": شعاع ضوء دهبي بيعدّي على الكارت مرة واحدة + هيدر الكارت بينوّر لحظة.
+   كله على طبقات منفصلة (::after وهيدر الكارت) من غير ما نلمس مكان الكارت نفسه. */
+.card.flash {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(201, 163, 95, .6), 0 14px 34px rgba(201, 163, 95, .35), var(--shadow);
+}
+.card.flash::after {
+  content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 45%;
+  pointer-events: none; z-index: 2;
+  background: linear-gradient(100deg, transparent 0%, rgba(255, 236, 190, .75) 50%, transparent 100%);
+  transform: translateX(-110%) skewX(-18deg);
+  animation: shine 1.3s var(--ease) .1s forwards;
+}
+.card.flash .card-tab { animation: tabGlow 1.4s ease-out; }
+@keyframes shine {
+  to { transform: translateX(270%) skewX(-18deg); }
+}
+@keyframes tabGlow {
+  0%, 100% { filter: none; }
+  30%      { filter: brightness(1.35) saturate(1.15); }
+}
+.card-tab { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--teal); color: #fff; padding: 10px 18px; transition: background .3s; }
+.card-tab h3 { font-family: var(--font-display); font-size: 1.2rem; }
+
+/* لون الكارت بيعبّر عن درجة التحميص */
+.card.roast-light .card-tab { background: linear-gradient(90deg, var(--roast-mid), var(--roast-light)); color: var(--espresso); }
+.card.roast-dark .card-tab { background: linear-gradient(90deg, var(--roast-dark), #5a3720); }
+.card.roast-classic .card-tab { background: var(--teal); }
+.card.roast-light .badge { background: rgba(255, 255, 255, .45); }
+.badge::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: currentColor; opacity: .85; flex: none; }
+.card:not([class*="roast-"]) .badge::before { display: none; }
+.blend .badge::before { display: none; }
+.card.roast-light .badge::before { background: var(--roast-light); box-shadow: 0 0 0 2px var(--roast-mid); }
+.card.roast-dark .badge::before { background: var(--roast-dark); box-shadow: 0 0 0 2px var(--tan); }
+
+.variant { padding: 14px 16px; }
+.variant + .variant { border-top: 1px dashed rgba(0, 0, 0, .12); }
+.variant-name { font-weight: 700; color: var(--bean); margin-bottom: 6px; }
+.item-note { color: var(--muted); font-size: .85rem; margin-bottom: 6px; }
+
+.prices { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.price-btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 52px; padding: 7px 4px; border-radius: var(--radius-sm); background: var(--teal); color: #fff;
+  transition: background .25s, color .25s, transform .25s var(--ease), box-shadow .25s;
+}
+.pb-label { font-size: .74rem; opacity: .85; line-height: 1.4; }
+.pb-price { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; line-height: 1.4; }
+.price-btn.added { animation: pop .4s; background: var(--gold); color: var(--espresso); }
+.price-btn:active { transform: scale(.94); }
+
+.list-card ul { padding: 8px 18px 14px; }
+.drink-row { display: flex; align-items: center; gap: 10px; padding: 8px 6px; margin-inline: -6px; border-radius: 10px; transition: background .2s; }
+.dr-name { font-weight: 600; transition: color .2s; }
+.dr-dots { flex: 1; border-bottom: 2px dotted rgba(0, 0, 0, .18); transform: translateY(5px); min-width: 12px; }
+.drink-row .price-btn { flex-direction: row; gap: 6px; min-height: 40px; padding: 4px 14px; border-radius: 999px; }
+.drink-row .price-btn::after { content: '+'; font-weight: 800; opacity: .8; }
+.drink-row .pb-label { font-size: .78rem; }
+.drink-row .pb-price { font-size: 1rem; }
+
+/* ============ 9. CART ============ */
+.cart-overlay { position: fixed; inset: 0; background: rgba(15, 8, 4, .6); opacity: 0; pointer-events: none; transition: opacity .3s; z-index: 90; }
+.cart-overlay.show { opacity: 1; pointer-events: auto; }
+.cart {
+  position: fixed; top: 0; bottom: 0; left: 0; width: min(420px, 100%); z-index: 100;
+  background: var(--paper); display: flex; flex-direction: column;
+  transform: translateX(-105%); visibility: hidden;
+  transition: transform .4s var(--ease), visibility 0s .4s;
+  box-shadow: var(--shadow-lg);
+}
+.cart.show { transform: none; visibility: visible; transition: transform .4s var(--ease), visibility 0s; }
+.cart-head { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; background: var(--espresso); color: var(--gold); border-bottom: 3px solid var(--teal); }
+.cart-head h3 { font-family: var(--font-display); font-size: 1.3rem; }
+.cart-close { width: 40px; height: 40px; border-radius: 50%; color: var(--gold-soft); border: 1px solid rgba(201, 163, 95, .4); transition: background .25s, color .25s, transform .35s var(--ease); }
+.cart-list { flex: 1; overflow-y: auto; padding: 10px 18px; overscroll-behavior: contain; }
+.cart-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4px 10px; padding: 14px 8px; margin-inline: -8px; border-bottom: 1px dashed rgba(0, 0, 0, .15); border-radius: 10px; transition: background .2s; }
+.ci-name { font-weight: 700; }
+.ci-name small { color: var(--muted); font-weight: 400; margin-inline-start: 6px; }
+.ci-price { font-family: var(--font-display); font-weight: 700; color: var(--teal-dark); }
+.qty { display: inline-flex; align-items: center; gap: 4px; background: #fff; border: 1px solid var(--sand); border-radius: 999px; padding: 2px; }
+.qty button { width: 34px; height: 34px; border-radius: 50%; font-weight: 800; color: var(--teal-dark); transition: background .2s, color .2s, transform .2s; }
+.qty button:active { transform: scale(.88); }
+.qty span { min-width: 24px; text-align: center; font-weight: 700; }
+.cart-empty { flex: 1; display: grid; place-items: center; text-align: center; color: var(--muted); padding: 30px; }
+.cart-foot { padding: 18px 22px calc(24px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--sand); display: grid; gap: 12px; text-align: center; background: #fff; }
+.cart-total { display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
+.cart-total strong { font-family: var(--font-display); font-size: 1.6rem; color: var(--teal-dark); }
+.cart-foot .btn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+.cart-note { font-size: .8rem; color: var(--muted); }
+
+.toast {
+  position: fixed; bottom: calc(26px + env(safe-area-inset-bottom, 0px)); inset-inline: 0; margin-inline: auto; width: max-content; max-width: 90%;
+  background: var(--espresso); color: var(--gold-soft); padding: 10px 22px; border-radius: 999px;
+  box-shadow: var(--shadow-lg); z-index: 120; border: 1px solid var(--gold); text-align: center;
+  opacity: 0; transform: translateY(20px); pointer-events: none; transition: .3s;
+}
+.toast.show { opacity: 1; transform: none; }
+
+/* زر الرجوع للأعلى */
+.to-top {
+  position: fixed; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); inset-inline-start: 18px; z-index: 60;
+  width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--espresso); color: var(--gold); border: 1px solid rgba(201, 163, 95, .5);
+  box-shadow: var(--shadow-lg);
+  opacity: 0; visibility: hidden; transform: translateY(14px);
+  transition: opacity .3s, transform .3s var(--ease), visibility 0s .3s, background .25s, color .25s;
+}
+.to-top.show { opacity: 1; visibility: visible; transform: none; transition: opacity .3s, transform .3s var(--ease), visibility 0s, background .25s, color .25s; }
+
+/* ============ 10. FOOTER ============ */
+.site-footer { background: var(--espresso); color: rgba(247, 239, 224, .75); padding: 38px 0 calc(38px + env(safe-area-inset-bottom, 0px)); border-top: 3px solid var(--teal); }
+.footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; }
+.footer-brand { font-family: var(--font-script); font-size: 2.2rem; color: var(--gold); line-height: 1.9; margin-block: -.3em -.2em; }
+.footer-tag { font-size: .9rem; }
+.footer-links { display: flex; gap: 8px; }
+.footer-links a { padding: 8px 12px; border-radius: 10px; transition: color .2s, background .2s; }
+.copy { width: 100%; text-align: center; font-size: .85rem; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, .08); }
+.noscript { text-align: center; padding: 14px; background: var(--gold); color: var(--espresso); font-weight: 700; }
+
+/* ============ 11. UTILITIES & MOTION ============ */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.reveal { transition: opacity .7s ease, transform .7s ease; }
+.js .reveal:not(.in) { opacity: 0; transform: translateY(26px); }
+
+@keyframes float   { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-14px) } }
+@keyframes breathe { 0%, 100% { opacity: .7; transform: scale(1) } 50% { opacity: 1; transform: scale(1.08) } }
+@keyframes steam   { 0% { opacity: 0; transform: translateY(24px) } 30% { opacity: .75 } 100% { opacity: 0; transform: translateY(-34px) } }
+@keyframes pop     { 0% { transform: scale(1) } 40% { transform: scale(1.18) } 100% { transform: scale(1) } }
+@keyframes rise    { from { opacity: 0; transform: translateY(18px) } to { opacity: 1; transform: none } }
+@keyframes spin    { to { transform: rotate(360deg) } }
+@keyframes drift   { 0%, 100% { transform: translateY(0) rotate(var(--r)) } 50% { transform: translateY(-16px) rotate(calc(var(--r) + 24deg)) } }
+@keyframes tagFloat { 0%, 100% { transform: rotate(-6deg) translateY(0) } 50% { transform: rotate(-3deg) translateY(-8px) } }
+@keyframes wheel   { 0% { opacity: 0; transform: translateY(0) } 30% { opacity: 1 } 100% { opacity: 0; transform: translateY(12px) } }
+
+/* ============ 12. HOVER (للأجهزة اللي بتدعمه بس) ============ */
+@media (hover: hover) and (pointer: fine) {
+  /* الهيدر */
+  .brand:hover { transform: rotate(-2deg) scale(1.06); filter: drop-shadow(0 6px 14px rgba(26, 147, 164, .55)); }
+  .nav-links a:hover { color: #fff; background: rgba(255, 255, 255, .09); }
+  .nav-links a.active:hover { background: var(--gold-soft); color: var(--espresso); }
+  .cart-btn:hover { background: var(--gold); color: var(--espresso); transform: translateY(-2px) rotate(-6deg); box-shadow: 0 8px 18px rgba(201, 163, 95, .4); }
+  .burger:hover { background: rgba(255, 255, 255, .08); }
+  .to-top:hover { background: var(--gold); color: var(--espresso); transform: translateY(-3px); }
+
+  /* الأزرار */
+  .btn:hover { transform: translateY(-3px); }
+  .btn:hover::before { inset-inline-start: 120%; }
+  .btn-primary:hover { background: var(--gold-soft); box-shadow: 0 14px 28px rgba(201, 163, 95, .5); }
+  .btn-ghost:hover { background: rgba(201, 163, 95, .18); border-color: var(--gold-soft); color: #fff; }
+  .btn-link:hover { color: var(--teal-dark); }
+
+  /* الهيرو والكارت التحتاني */
+  .cup-svg:hover { filter: drop-shadow(0 30px 40px rgba(201, 163, 95, .35)); }
+  .hero-chips li:hover { background: rgba(26, 147, 164, .2); border-color: var(--brand-teal); transform: translateY(-2px); }
+  .scroll-cue:hover { opacity: 1; transform: translateY(4px); }
+  .perk:hover { background: var(--teal-soft); }
+  .perk:hover .perk-icon { background: var(--teal); color: #fff; transform: scale(1.1) rotate(-8deg); }
+
+  /* الأقسام */
+  .stat:hover { transform: translateY(-6px); box-shadow: var(--glow-teal); }
+  .feature:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: rgba(23, 137, 154, .35); }
+  .feature:hover .feature-icon { transform: scale(1.12) rotate(-8deg); background: var(--teal); }
+  .blend:hover { transform: translateY(-8px); border-color: var(--gold); box-shadow: 0 20px 40px rgba(0, 0, 0, .4); }
+  .blend:hover::after { transform: rotate(-12deg) scale(1.2); opacity: .14; }
+  .blend a:hover { color: #fff; padding-inline: 8px; }
+  .mood:hover { background: var(--teal-soft); transform: translateY(-2px); }
+  .mood[aria-selected="true"]:hover { background: var(--teal-dark); }
+  .pick:hover { transform: translateY(-4px); border-color: var(--teal); box-shadow: var(--shadow); background: #fff; }
+  .pick a:hover { color: var(--teal-dark); transform: translateX(-4px); }
+  .weight:hover { transform: translateY(-4px) scale(1.04); background: var(--teal-dark); box-shadow: var(--glow-teal); }
+  .contact-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: rgba(23, 137, 154, .35); }
+  .contact-card:hover .contact-icon { transform: scale(1.1) rotate(-8deg); }
+
+  /* المنيو */
+  .tab:hover { border-color: var(--teal); transform: translateY(-2px); }
+  .tab.active:hover { background: var(--teal-dark); }
+  .tabs.variants .tab.active:hover { background: var(--roast); }
+  .search:hover { border-color: var(--teal); }
+  .search button:hover { background: var(--teal-soft); color: var(--teal-dark); }
+  .card:hover { transform: translateY(-5px); box-shadow: 0 18px 40px rgba(43, 26, 16, .2); border-color: rgba(23, 137, 154, .5); }
+  .price-btn:hover { background: var(--gold); color: var(--espresso); transform: translateY(-3px); box-shadow: 0 8px 16px rgba(201, 163, 95, .4); }
+  /* كروت التحميص الغامق: الهوفر بنفس لون هيدر الكارت (بني غامق) بدل الدهبي */
+  .card.roast-dark .price-btn:hover {
+    background: linear-gradient(90deg, var(--roast-dark), #5a3720);
+    color: #fff;
+    box-shadow: 0 8px 16px rgba(59, 33, 19, .45);
+  }
+  .drink-row:hover { background: var(--teal-soft); }
+  .drink-row:hover .dr-name { color: var(--teal-dark); }
+
+  /* السلة */
+  .cart-close:hover { background: var(--gold); color: var(--espresso); transform: rotate(90deg); }
+  .cart-item:hover { background: rgba(23, 137, 154, .06); }
+  .qty button:hover { background: var(--teal); color: #fff; }
+
+  /* الفوتر */
+  .footer-links a:hover { color: var(--gold); background: rgba(255, 255, 255, .06); }
+}
+
+/* ============ 13. RESPONSIVE ============ */
+@media (max-width: 860px) {
+  :root { --header-h: 66px; }
+  .burger { display: flex; }
+
+  /* قائمة الموبايل: بتنزل تحت الهيدر، ومقفولة تمامًا (مش بتتفوكس عليها) لما تكون مقفولة */
+  .nav-links {
+    position: absolute; top: 100%; inset-inline: 0; flex-direction: column; gap: 0;
+    background: var(--espresso); padding: 8px 4% 14px; border-radius: 0; border: 0;
+    border-bottom: 3px solid var(--teal);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, .4);
+    max-height: calc(100vh - var(--header-h)); max-height: calc(100dvh - var(--header-h)); overflow-y: auto;
+    opacity: 0; visibility: hidden; transform: translateY(-10px);
+    transition: opacity .25s, transform .35s var(--ease), visibility 0s .35s;
+  }
+  .site-header.open .nav-links { opacity: 1; visibility: visible; transform: none; transition: opacity .25s, transform .35s var(--ease), visibility 0s; }
+  .nav-links a { padding: 14px 12px; font-size: 1.05rem; border-radius: 12px; border-bottom: 1px solid rgba(255, 255, 255, .06); }
+  .nav-links a.active { color: var(--gold); background: rgba(201, 163, 95, .14); }
+
+  .hero { min-height: auto; }
+  .hero-grid { grid-template-columns: 1fr; text-align: center; padding-block: 30px 44px; gap: 14px; }
+  .hero-text { order: 2; }
+  .hero-art { order: 1; max-width: 260px; margin-inline: auto; }
+  .hero-title { justify-content: center; }
+  .hero-tag { margin-inline: auto; }
+  .hero-lead { margin-inline: auto; font-size: 1rem; }
+  .hero-cta, .hero-chips { justify-content: center; }
+  .scroll-cue { display: none; }
+  .price-tag { top: 2%; inset-inline-end: -6%; padding: 4px 14px 6px; }
+  .price-tag strong { font-size: 1.35rem; }
+  .b3, .b5, .b6 { display: none; }
+
+  .section { padding-block: 60px; }
+  .perks + .section { padding-top: 48px; }
+  .section-head { margin-bottom: 34px; }
+  .weights { grid-template-columns: repeat(2, 1fr); }
+
+  /* شريط الأدوات: عادي مش ثابت عشان ما ياخدش نص الشاشة */
+  .card.family { scroll-margin-top: calc(var(--header-h) + 16px); }
+  .toolbar { position: static; background: transparent; border-bottom: 0; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .toolbar-inner { flex-direction: column; align-items: stretch; padding-block: 0; }
+  .search { max-width: none; flex-basis: auto; order: -1; }
+  .tabs { margin-inline: -4vw; padding-inline: 4vw; padding-block: 4px; }
+}
+
+@media (max-width: 600px) {
+  .container { width: 91%; }
+  .brand-word { font-size: 1.4rem; }
+
+  .hero-title { font-size: clamp(3.2rem, 17vw, 4.6rem); }
+  .hero-tag { font-size: 1.05rem; }
+  .hero-tag span { flex-basis: 34px; }
+  .hero-cta .btn { flex: 1 1 140px; }
+
+  /* الكارت التحتاني: التلاتة جنب بعض، الأيقونة فوق الاسم */
+  .perks { padding-top: 24px; }
+  .perk { flex-direction: column; gap: 6px; padding: 14px 4px; text-align: center; }
+  .perk-icon { width: 44px; height: 44px; border-radius: 14px; }
+  .perk-icon svg { width: 22px; height: 22px; }
+  .perk-text strong { font-size: 1rem; }
+
+  .stats { gap: 10px; }
+  .stat { padding: 16px 6px; }
+  .stat span { font-size: .85rem; }
+  .features { gap: 16px; }
+  .feature { padding: 24px 20px; }
+
+  .guide { padding: 22px 14px; }
+  .moods { gap: 8px; }
+  .mood { flex: 1 1 100%; }
+  .contact-card { padding: 18px; }
+  .contact-card p { font-size: 1.1rem; }
+
+  .menu-grid { gap: 16px; }
+  .variant { padding: 12px; }
+  .prices { gap: 6px; }
+  .pb-price { font-size: 1.02rem; }
+  .pb-label { font-size: .7rem; }
+  .list-card ul { padding: 6px 14px 12px; }
+
+  .cart { width: 100%; }
+  .cart-head { padding: 14px 18px; }
+  .to-top { width: 42px; height: 42px; inset-inline-start: 12px; }
+
+  .footer-inner { justify-content: center; text-align: center; }
+  .footer-links { justify-content: center; flex-wrap: wrap; }
+}
+
+@media (max-width: 360px) {
+  .pb-price { font-size: .95rem; }
+  .prices { gap: 4px; }
+  .drink-row { gap: 6px; }
+  .dr-name { font-size: .92rem; }
+  .perk-text strong { font-size: .92rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal:not(.in) { opacity: 1; transform: none; }
+}
