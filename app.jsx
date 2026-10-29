@@ -1,12 +1,12 @@
 /* =====================================================
    بن قيّم — app.jsx (React)
-   المنيو + سلة الطلب + إرسال واتساب
+   المنيو + سلة الطلب (نسخة تجريبية — من غير إرسال واتساب)
    كل حاجة جوه IIFE (مفيش تعارض مع script.js)،
    والداتا بتيجي من window.QAIEM.
    ===================================================== */
 (function () {
   const { useState, useEffect, useMemo, useRef } = React;
-  const { WHATSAPP, STORE_NAME, WEIGHTS, BEAN_FAMILIES, BULK, DRINKS, HERBAL, fmt, money, norm } = window.QAIEM;
+  const { WEIGHTS, BEAN_FAMILIES, BULK, DRINKS, HERBAL, fmt, money, norm } = window.QAIEM;
 
   const STORAGE_KEY = 'qaiem-cart-v1';
   const VARIANTS = [
@@ -24,13 +24,6 @@
             Number.isFinite(i.price) && Number.isInteger(i.qty) && i.qty > 0)
         : [];
     } catch (e) { return []; }
-  }
-
-  function buildMessage(items) {
-    const lines = items.map((i) =>
-      `• ${i.name}${i.label ? ` (${i.label})` : ''} × ${i.qty} = ${i.qty * i.price} ج`);
-    const total = items.reduce((s, i) => s + i.qty * i.price, 0);
-    return `السلام عليكم، عايز أطلب من ${STORE_NAME}:\n${lines.join('\n')}\n\nالإجمالي: ${total} ج`;
   }
 
   // درجة التحميص -> كلاس لون الكارت (فاتح = تان، غامق = بني، غير كده = تيل)
@@ -306,7 +299,6 @@
   /* ============ 3. CART ============ */
   function CartDrawer({ open, items, total, onClose, onChange, onClear }) {
     const empty = items.length === 0;
-    const href = empty ? '#' : `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(buildMessage(items))}`;
 
     const handleClear = () => {
       if (window.confirm('تفريغ السلة بالكامل؟')) onClear();
@@ -346,19 +338,9 @@
               <span>الإجمالي</span>
               <strong>{money(total)}</strong>
             </div>
-            <a
-              className="btn btn-primary"
-              href={href}
-              target="_blank"
-              rel="noopener"
-              aria-disabled={empty}
-              tabIndex={empty ? -1 : 0}
-              onClick={(e) => { if (empty) e.preventDefault(); else setTimeout(onClose, 300); }}
-            >
-              ابعت الطلب على واتساب
-            </a>
+            <p className="cart-demo">🚧 نسخة تجريبية — إرسال الطلب هيتفعل قريبًا</p>
             {!empty && <button type="button" className="btn-link" onClick={handleClear}>تفريغ السلة</button>}
-            <p className="cart-note">الأسعار حسب المنيو وممكن تتغير.</p>
+            <p className="cart-note">السلة هنا لحساب الإجمالي بس في النسخة التجريبية.</p>
           </div>
         </aside>
       </>
