@@ -739,3 +739,14 @@ ul { list-style: none; }
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .js .reveal:not(.in) { opacity: 1; transform: none; }
 }
+
+/* ============ Demo version ============ */
+.demo-bar {
+  background: var(--gold); color: var(--espresso); text-align: center;
+  font-weight: 700; font-size: .85rem; padding: 6px 12px;
+}
+.cart-demo {
+  padding: 12px 14px; border-radius: var(--radius-sm); background: var(--teal-soft);
+  color: var(--teal-dark); font-weight: 700; font-size: .95rem;
+}
+.contact-grid { max-width: 380px; }
